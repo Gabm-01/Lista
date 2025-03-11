@@ -175,7 +175,3 @@
 | Limonada      |   X unid.  |  [ ]  |
 
 
-- [ ] Finish report
-- [ ] Review code
-- [x] Submit pull request
-- [ ] Prepare presentation
