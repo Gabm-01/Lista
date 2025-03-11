@@ -5,11 +5,15 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f9f9f9;
+    background-color: #fff0f5; /* Light pink background */
     padding: 20px;
+    background-image: linear-gradient(45deg, #ffccd5 25%, transparent 25%, transparent 75%, #ffccd5 75%, #ffccd5), 
+                      linear-gradient(45deg, #ffccd5 25%, transparent 25%, transparent 75%, #ffccd5 75%, #ffccd5);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
 }
 
 .container {
@@ -17,63 +21,96 @@ body {
     margin: 0 auto;
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+    border: 3px solid #ffc0cb;
 }
 
 h1 {
-    color: #2c3e50;
+    color: #ff69b4; /* Hot pink */
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #eee;
+    border-bottom: 3px dotted #ffb6c1; /* Light pink */
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.3);
 }
 
 h2 {
-    color: #3498db;
+    color: #ff1493; /* Deep pink */
     margin: 20px 0;
+    font-size: 1.8em;
 }
 
 h3 {
-    color: #16a085;
+    color: #c71585; /* Medium violet red */
     margin: 15px 0;
     padding-left: 10px;
-    border-left: 4px solid #16a085;
+    border-left: 4px solid #ff69b4;
+    font-size: 1.4em;
 }
 
 .section {
     margin-bottom: 30px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 18px;
+    background-color: #fff0f5; /* Lavender blush */
+    border-radius: 15px;
+    box-shadow: 0 3px 8px rgba(255, 182, 193, 0.4);
+    border: 2px solid #ffb6c1;
 }
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-bottom: 20px;
     font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ffccd5;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #ffb6c1; /* Light pink */
     font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #ffecf2;
 }
 
+/* Custom checkbox styles */
 input[type="checkbox"] {
-    transform: scale(1.2);
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #ff69b4;
+    border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #ff69b4;
+}
+
+input[type="checkbox"]:checked:after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 0;
+    left: 3px;
 }
 
 .tasks {
@@ -84,7 +121,9 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    padding: 5px 0;
+    padding: 10px;
+    background-color: #ffecf2;
+    border-radius: 10px;
 }
 
 .task input[type="checkbox"] {
@@ -98,7 +137,7 @@ input[type="checkbox"] {
 
 .task input[type="checkbox"]:checked + label {
     text-decoration: line-through;
-    color: #7f8c8d;
+    color: #ff69b4;
 }
 
 @media (max-width: 768px) {
@@ -113,4 +152,18 @@ input[type="checkbox"] {
     .container {
         padding: 10px;
     }
+    
+    body {
+        padding: 10px;
+    }
+}
+
+/* Add cute decorative elements */
+.section::before {
+    content: '♥';
+    color: #ff69b4;
+    font-size: 1.5em;
+    position: absolute;
+    margin-top: -30px;
+    margin-left: -10px;
 } 
