@@ -14,122 +14,229 @@
         
         <div id="content-container">
             <!-- Content will be dynamically loaded here -->
-            <div class="loading">
-                <p>Carregando lista de compras...</p>
-            </div>
         </div>
     </div>
 
     <script>
-        // Function to fetch and parse the README.md file
-        async function loadReadmeContent() {
-            try {
-                const response = await fetch('README.md');
-                if (!response.ok) {
-                    throw new Error('Failed to load README.md');
-                }
-                
-                const markdownContent = await response.text();
-                parseMarkdownContent(markdownContent);
-            } catch (error) {
-                console.error('Error loading README:', error);
-                document.getElementById('content-container').innerHTML = 
-                    `<div class="error">Erro ao carregar a lista. ${error.message}</div>`;
+        // This is your README.md data transformed into a JavaScript object
+        const menuData = [
+            {
+                title: "Tabua de queijos",
+                items: [
+                    { name: "Queijo Serra", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Cabrales", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Gorgonzola", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Parmesão", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Provolone", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Romano", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Cheddar", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Gouda", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Brie", quantity: "1 unid.", checked: false },
+                    { name: "Queijo Camembert", quantity: "1 unid.", checked: false }
+                ]
+            },
+            {
+                title: "Azeitonas",
+                items: [
+                    { name: "Azeitonas verdes", quantity: "q.b.", checked: false },
+                    { name: "Azeitonas pretas", quantity: "q.b.", checked: false },
+                    { name: "Alho", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Pimenta", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Dip de requeijão",
+                items: [
+                    { name: "Requeijão", quantity: "1 unid.", checked: false },
+                    { name: "Alho", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Sal", quantity: "q.b.", checked: false },
+                    { name: "Manjericão", quantity: "q.b.", checked: false },
+                    { name: "Pimenta", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Salada de feijão frade",
+                items: [
+                    { name: "Ovo S", quantity: "3 unid.", checked: false },
+                    { name: "Água", quantity: "q.b.", checked: false },
+                    { name: "Sal", quantity: "1", checked: false },
+                    { name: "Feijão-frade cozido", quantity: "1 unid.", checked: false },
+                    { name: "Atum em azeite", quantity: "2 unid.", checked: false },
+                    { name: "Cebola-roxa", quantity: "1 unid.", checked: false },
+                    { name: "Tomate de rama", quantity: "3 unid.", checked: false },
+                    { name: "Vinagre", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Focaccia",
+                items: [
+                    { name: "Farinha", quantity: "500g", checked: false },
+                    { name: "Água", quantity: "q.b.", checked: false },
+                    { name: "Sal", quantity: "q.b.", checked: false },
+                    { name: "Fermento", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Tomate cherry", quantity: "1 unid.", checked: false }
+                ]
+            },
+            {
+                title: "Pão de Alho",
+                items: [
+                    { name: "Pão", quantity: "1 unid.", checked: false },
+                    { name: "Alho", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Queijo mozzarella", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Folhado Mozzarella e Tomate",
+                items: [
+                    { name: "Massa folhada", quantity: "1 unid.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Queijo mozzarella", quantity: "q.b.", checked: false },
+                    { name: "Tomate", quantity: "q.b.", checked: false },
+                    { name: "Pesto", quantity: "1 unid.", checked: false }
+                ]
+            },
+            {
+                title: "Folhado Mozarela e Bacon",
+                items: [
+                    { name: "Massa folhada", quantity: "1 unid.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Queijo mozzarella", quantity: "q.b.", checked: false },
+                    { name: "Bacon", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Sopa de cogumelos",
+                items: [
+                    { name: "Cogumelos marrons/brancos", quantity: "1500g", checked: false },
+                    { name: "Cogumelos pleurotus", quantity: "400g", checked: false },
+                    { name: "Cebola", quantity: "1 unid.", checked: false },
+                    { name: "Alho", quantity: "5 unid.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Sal", quantity: "q.b.", checked: false },
+                    { name: "Manteiga", quantity: "4 colheres de sopa", checked: false },
+                    { name: "Vinho Branco", quantity: "500 ml", checked: false },
+                    { name: "Stock de Cogumelos", quantity: "2 l", checked: false },
+                    { name: "Miso", quantity: "2 colheres de sopa", checked: false },
+                    { name: "Mostarda Dijon", quantity: "1 colheres de sopa", checked: false },
+                    { name: "Pimentao Doce", quantity: "1 colheres de sopa", checked: false },
+                    { name: "Creme", quantity: "250 ml", checked: false },
+                    { name: "Cebolinha", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Salada",
+                items: [
+                    { name: "Alface", quantity: "1 unid.", checked: false },
+                    { name: "Tomate", quantity: "1 unid.", checked: false },
+                    { name: "Cebola", quantity: "1 unid.", checked: false },
+                    { name: "Cebolinha", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Sal", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Toffu de Laranja",
+                items: [
+                    { name: "Toffu", quantity: "2 unid.", checked: false },
+                    { name: "Laranja", quantity: "q.b.", checked: false },
+                    { name: "Molho de soja", quantity: "q.b.", checked: false },
+                    { name: "Agave", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Sal", quantity: "q.b.", checked: false },
+                    { name: "Cebolinha", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Caril de grao",
+                items: [
+                    { name: "Grao", quantity: "500 g", checked: false },
+                    { name: "Cebola", quantity: "q.b.", checked: false },
+                    { name: "Alho", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false },
+                    { name: "Tomate", quantity: "q.b.", checked: false },
+                    { name: "Legumes", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Arroz",
+                items: [
+                    { name: "Arroz", quantity: "500 g", checked: false },
+                    { name: "Cebola", quantity: "q.b.", checked: false },
+                    { name: "Alho", quantity: "q.b.", checked: false },
+                    { name: "Azeite", quantity: "q.b.", checked: false }
+                ]
+            },
+            {
+                title: "Items Pronto a Comer",
+                items: [
+                    { name: "Paratha", quantity: "20 unid.", checked: false },
+                    { name: "Hummus", quantity: "2 unid.", checked: false },
+                    { name: "Nachos", quantity: "2 unid.", checked: false },
+                    { name: "Bolo de Aniversário", quantity: "1 unid.", checked: false },
+                    { name: "Batatas Fritas", quantity: "3 unid.", checked: false }
+                ]
+            },
+            {
+                title: "Bebidas",
+                items: [
+                    { name: "Cerveja", quantity: "2 grades", checked: false },
+                    { name: "Vinho", quantity: "X unid.", checked: false },
+                    { name: "Refrigerante", quantity: "X unid.", checked: false },
+                    { name: "Limonada", quantity: "X unid.", checked: false }
+                ]
             }
-        }
+        ];
 
-        // Parse markdown content and extract tables
-        function parseMarkdownContent(markdownContent) {
+        // Function to generate the HTML content
+        function generateMenuContent() {
             const contentContainer = document.getElementById('content-container');
             contentContainer.innerHTML = '';
             
-            // Split content by section headers (## headers)
-            const sections = markdownContent.split(/^## /m);
-            
-            // Process each section (skip the first one as it's before any ## header)
-            for (let i = 1; i < sections.length; i++) {
-                const section = sections[i].trim();
-                const sectionLines = section.split('\n');
-                const sectionTitle = sectionLines[0].trim();
+            menuData.forEach(section => {
+                // Create section div
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section';
                 
-                // Find the table in this section
-                const tableStartIndex = sectionLines.findIndex(line => line.includes('|---'));
+                // Add section title
+                const titleElem = document.createElement('h3');
+                titleElem.textContent = section.title;
+                sectionDiv.appendChild(titleElem);
                 
-                if (tableStartIndex > 0) {
-                    // Create section div
-                    const sectionDiv = document.createElement('div');
-                    sectionDiv.className = 'section';
-                    
-                    // Add section title
-                    const titleElem = document.createElement('h3');
-                    titleElem.textContent = sectionTitle;
-                    sectionDiv.appendChild(titleElem);
-                    
-                    // Process table
-                    const tableLines = [];
-                    
-                    // Get table header
-                    const headerLine = sectionLines[tableStartIndex - 1];
-                    tableLines.push(headerLine);
-                    
-                    // Get divider line
-                    tableLines.push(sectionLines[tableStartIndex]);
-                    
-                    // Get table rows
-                    let rowIndex = tableStartIndex + 1;
-                    while (rowIndex < sectionLines.length && sectionLines[rowIndex].includes('|')) {
-                        tableLines.push(sectionLines[rowIndex]);
-                        rowIndex++;
-                    }
-                    
-                    // Create HTML table
-                    const table = createTableFromMarkdown(tableLines);
-                    sectionDiv.appendChild(table);
-                    
-                    // Add to container
-                    contentContainer.appendChild(sectionDiv);
-                }
-            }
-            
-            // Initialize checkboxes
-            initializeCheckboxes();
-        }
-
-        // Create HTML table from markdown table lines
-        function createTableFromMarkdown(tableLines) {
-            const table = document.createElement('table');
-            
-            // Process header
-            const headerCells = parseTableRow(tableLines[0]);
-            const thead = document.createElement('thead');
-            const headerRow = document.createElement('tr');
-            
-            headerCells.forEach(cell => {
-                const th = document.createElement('th');
-                th.textContent = cell.trim();
-                headerRow.appendChild(th);
-            });
-            
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-            
-            // Process body
-            const tbody = document.createElement('tbody');
-            
-            for (let i = 2; i < tableLines.length; i++) {
-                const cells = parseTableRow(tableLines[i]);
+                // Create table
+                const table = document.createElement('table');
                 
-                if (cells.length >= 3) {
+                // Add table header
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                
+                const headers = ['Ingrediente', 'Quantidade', 'Check'];
+                headers.forEach(headerText => {
+                    const th = document.createElement('th');
+                    th.textContent = headerText;
+                    headerRow.appendChild(th);
+                });
+                
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // Add table body
+                const tbody = document.createElement('tbody');
+                
+                section.items.forEach(item => {
                     const tr = document.createElement('tr');
                     
                     // Add item name
                     const tdName = document.createElement('td');
-                    tdName.textContent = cells[0].trim();
+                    tdName.textContent = item.name;
                     tr.appendChild(tdName);
                     
                     // Add quantity
                     const tdQuantity = document.createElement('td');
-                    tdQuantity.textContent = cells[1].trim();
+                    tdQuantity.textContent = item.quantity;
                     tr.appendChild(tdQuantity);
                     
                     // Add checkbox
@@ -137,30 +244,22 @@
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
                     checkbox.className = 'checkbox';
-                    checkbox.dataset.item = cells[0].trim();
-                    
-                    // Check if the item is checked in the markdown
-                    const checkStatus = cells[2].trim();
-                    if (checkStatus.includes('[x]')) {
-                        checkbox.checked = true;
-                    }
+                    checkbox.dataset.item = item.name;
+                    checkbox.checked = item.checked;
                     
                     tdCheckbox.appendChild(checkbox);
                     tr.appendChild(tdCheckbox);
                     
                     tbody.appendChild(tr);
-                }
-            }
+                });
+                
+                table.appendChild(tbody);
+                sectionDiv.appendChild(table);
+                contentContainer.appendChild(sectionDiv);
+            });
             
-            table.appendChild(tbody);
-            return table;
-        }
-
-        // Parse markdown table row into cells
-        function parseTableRow(rowLine) {
-            return rowLine.split('|')
-                .map(cell => cell.trim())
-                .filter((cell, index, array) => index > 0 && index < array.length - 1);
+            // Initialize checkboxes
+            initializeCheckboxes();
         }
 
         // Initialize checkbox behavior
@@ -181,8 +280,8 @@
             });
         }
 
-        // Load content when page loads
-        document.addEventListener('DOMContentLoaded', loadReadmeContent);
+        // Generate content when page loads
+        document.addEventListener('DOMContentLoaded', generateMenuContent);
     </script>
 </body>
 </html> 

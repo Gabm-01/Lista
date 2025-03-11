@@ -43,7 +43,6 @@
 
 | Ingrediente            |  Quantidade | Check |
 |:-----------------------|:-----------:|:-----:|
-| Rúcula                 |    1 emb.   |  [ ]  |
 | Ovo S                  |    3 unid.  |  [ ]  |
 | Água                   |    q.b.     |  [ ]  |
 | Sal                    |    1        |  [ ]  |
@@ -108,7 +107,7 @@
 | Miso                     | 2 colheres de sopa   |  [ ]  |
 | Mostarda Dijon           | 1 colheres de sopa   |  [ ]  |
 | Pimentao Doce            | 1 colheres de sopa   |  [ ]  |
-| Creme de leite           |       250 ml         |  [ ]  |
+| Creme                    |       250 ml         |  [ ]  |
 | Cebolinha                |       q.b.           |  [ ]  |
 
 ## Salada 
